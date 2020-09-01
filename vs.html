@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Set Background Color To Selected Table TR </title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <style>
+            
+             tr{cursor: pointer; transition: all .25s ease-in-out}
+            .selected{background-color: red; font-weight: bold; color: #fff;}
+             body {
+      -webkit-print-color-adjust: exact;
+    }
+        </style>
+       
+    </head>
+    <body>
+        
+        <table id="tblexportData" border="1">
+            
+            <tr>
+			    
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+            </tr>
+            <tr>
+			
+                <td>A1</td>
+                <td>B1</td>
+                <td>C1</td>
+            </tr>
+            <tr>
+			
+                <td>A2</td>
+                <td>B2</td>
+                <td>C2</td>
+            </tr>
+            <tr>
+		    
+                <td>A3</td>
+                <td>B3</td>
+                <td>C3</td>
+            </tr>
+            <tr>
+			
+                <td>A4</td>
+                <td>B4</td>
+                <td>C4</td>
+            </tr>
+            <tr>
+			
+                <td>A5</td>
+                <td>B5</td>
+                <td>C5</td>
+            </tr>
+            <tr>
+			
+                <td>A6</td>
+                <td>B6</td>
+                <td>C6</td>
+            </tr>
+            <tr>
+			
+                <td>A7</td>
+                <td>B7</td>
+                <td>C7</td>
+            </tr>
+            <tr>
+			
+                <td>A8</td>
+                <td>B8</td>
+                <td>C8</td>
+            </tr>
+            
+        </table>
+        <button onclick="myFunction()">Print this page</button>
+  <button onclick="exportToExcel('tblexportData', 'user-data')" class="btn btn-success">Export Table Data To Excel File</button>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+			<script>
+			$("#tblexportData").on("click","td",function(){
+				
+					$(this).css('background-color','blue');
+					$(this).css('color','yellow');
+				});
+				$("#tblexportData").on("dblclick","td",function(){
+					$(this).css('background-color','white');
+					$(this).css('color','black');
+
+				});
+			</script>
+			<script>
+function myFunction() {
+  window.print();
+}
+</script>
+
+<script type="text/javascript">
+function exportToExcel(tableID, filename = ''){
+    var downloadurl;
+    var dataFileType = 'application/vnd.ms-excel';
+    var tableSelect = document.getElementById(tableID);
+    var tableHTMLData = tableSelect.outerHTML.replace(/ /g, '%20');
+    
+    // Specify file name
+    filename = filename?filename+'.xls':'export_excel_data.xls';
+    
+    // Create download link element
+    downloadurl = document.createElement("a");
+    
+    document.body.appendChild(downloadurl);
+    
+    if(navigator.msSaveOrOpenBlob){
+        var blob = new Blob(['\ufeff', tableHTMLData], {
+            type: dataFileType
+        });
+        navigator.msSaveOrOpenBlob( blob, filename);
+    }else{
+        // Create a link to the file
+        downloadurl.href = 'data:' + dataFileType + ', ' + tableHTMLData;
+    
+        // Setting the file name
+        downloadurl.download = filename;
+        
+        //triggering the function
+        downloadurl.click();
+    }
+}
+ 
+</script>
+</body>
+</html>
